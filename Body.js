@@ -29,16 +29,6 @@ Body.prototype.resetForces = function() {
 	this.acc = new Vec(0, 0);
 };
 
-// retourne la norme de la force de gravitation s'exerçant sur le point m
-
-Body.prototype.getForceGravitation = function(m) {
-	var d2 = this.pos.minus(m.pos).length2();
-	
-	// Cas ou les deux systèmes ont la même position
-	
-	return (G * this.mass * m.mass) / d2;
-};
-
 // Attire un objet par la force gravitationnelle
 
 Body.prototype.attract = function(m) {
