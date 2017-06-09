@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+	<head>
+		<title>NBodies</title>
+		<meta http-equiv='content-type' content='text/html: charset=utf-8' />
+		<style type='text/css'>
+		#cvs
+		{
+			border: 1px solid green;
+		}
+		#cvs_webgl
+		{
+			position: absolute;
+			left: 8px;
+			top: 8px;
+			z-index: -1;
+		}
+		.container
+		{
+			display: flex;
+		}
+		.infos
+		{
+			margin-left: 10px;
+			/*background-color: #eeeeee;*/
+		}
+		p
+		{
+			margin-top: 0px;
+			margin-bottom: 2px;
+			/*background-color: #eeeeee;*/
+		}
+		</style>
+	</head>
+	<body>
+		<div class='container'>
+			<canvas id='cvs' width='800' height='800'>Not supported</canvas>
+			<canvas id='cvs_webgl' width='800' height='800'>Not supported</canvas>
+
+			<div class='infos'>
+				<p id='time'>0</p>
+				<p id='nbr_of_bodies'>0</p>
+				<div id='stats'></div>
+				
+				<label for='opt1'>
+					<input type='radio' name='type-simulation' id='opt1' value='liberation' checked/>
+					Vitesse de libération
+				</label>
+				
+				<label for='opt2'>
+					<input type='radio' name='type-simulation' id='opt2' value='solar-system' />
+					Système solaire
+				</label>
+				
+				<label for='opt3'>
+					<input type='radio' name='type-simulation' id='opt3' value='binary-star' />
+					Étoile binaire
+				</label>
+				
+				<br />
+				<br />
+				<label for='draw_bodies'>
+					<input type='checkbox' name='draw_bodies' value='draw_bodies' id='draw_bodies' checked/>
+					Corps
+				</label>
+
+				<br />
+				<label for='draw_field'>
+					<input type='checkbox' name='draw_field' value='draw_field' id='draw_field' checked/>
+					Champ gravitationnel
+				</label>
+
+				<br />
+				<label for='draw_vectors'>
+					<input type='checkbox' name='draw_vectors' value='draw_vectors' id='draw_vectors' checked/>
+					Vecteurs
+				</label>
+
+				<br />
+				<label for='draw_trace'>
+					<input type='checkbox' name='draw_trace' value='draw_trace' id='draw_trace' checked/>
+					Trajectoire
+				</label>
+
+				<br />
+				<br />
+				<input type='button' name'reset' value='Reset' id='reset' />
+				
+				<br />
+				<br />
+				<p id='infos'>Infos</p>
+			</div>
+		</div>
+
+		<script src='lib/stats.js'></script>
+
+		<script src='utils/Utilities.js'></script>
+		<script src='utils/Variables.js'></script>
+		<script src='utils/Vec.js'></script>
+		<script src='utils/Planets.js'></script>
+		<script src='utils/Input.js'></script>
+
+		<script src='dom/CanvasElement.js'></script>
+		<script src='dom/CanvasWebGL.js'></script>
+		<script src='dom/StatsElement.js'></script>
+	
+		<script src='Shaders.js'></script>
+		<script src='Body.js'></script>
+		<script src='World.js'></script>
+		<script src='Animation.js'></script>
+
+		<script src='anim/LiberationSpeed.js'></script>
+		<script src='anim/SolarSystem.js'></script>
+		<script src='anim/BinaryStar.js'></script>
+
+		<script src='Main.js'></script>
+	</body>
+</html>
