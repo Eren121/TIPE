@@ -42,11 +42,6 @@ Body.prototype.attract = function(m) {
 	var vec_distance = this.pos.minus(m.pos);
 
 	var d = vec_distance.length();
-	
-	//On ne traite pas si la distance est inférieure au rayon des deux objets
-	if(d < this.radius + m.radius)
-		return;
-	
 	var a = (G * this.mass) / (d*d*d);
 
 	m.acc.x += a * vec_distance.x;
