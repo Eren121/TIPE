@@ -36,11 +36,17 @@ Body.prototype.attract = function(m) {
 	//On ne traite pas les cas ou la masse est nulle
 	if(m.mass === 0 || this.mass === 0)
 		return;
+	
 	// vecteur unitaire dirigé de m vers this
 	
 	var vec_distance = this.pos.minus(m.pos);
 
 	var d = vec_distance.length();
+	
+	//On ne traite pas si la distance est inférieure au rayon des deux objets
+	if(d < this.radius + m.radius)
+		return;
+	
 	var a = (G * this.mass) / (d*d*d);
 
 	m.acc.x += a * vec_distance.x;
