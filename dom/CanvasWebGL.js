@@ -13,7 +13,7 @@ function CanvasWebGL(id, vert, frag) {
 CanvasWebGL.prototype.init = function() {
 
 	try {
-		this.gl = this.cvs.getContext('webgl');
+		this.gl = this.cvs.getContext('webgl') || this.cvs.getContext('experimental-webgl');
 	}
 	catch(e) {}
 

@@ -36,6 +36,7 @@ Body.prototype.attract = function(m) {
 	//On ne traite pas les cas ou la masse est nulle
 	if(m.mass === 0 || this.mass === 0)
 		return;
+	
 	// vecteur unitaire dirigé de m vers this
 	
 	var vec_distance = this.pos.minus(m.pos);
