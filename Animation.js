@@ -5,6 +5,7 @@ var global =  {
 
 	cvsGLSL: new CanvasWebGL('cvs_webgl', VERT_SHADER_SRC, FRAG_SHADER_SRC), //Canvas pour l'affichage des shaders
 
+	paused: false,
 	draw_bodies: true,
 	draw_field: true,
 	draw_trace: true,
@@ -209,15 +210,20 @@ class Animation {
 		this.stats_computing.begin();
 
 			
-			//On fait plusieurs fois la boucle pour augmenter la vitesse de l'animation
-			for(nb = 0; nb < this.iterations; ++nb) {
-				this.computeForces();
+			if(!global.paused) {
+
+				//On fait plusieurs fois la boucle pour augmenter la vitesse de l'animation
+				for(nb = 0; nb < this.iterations; ++nb) {
+					this.computeForces();
+				}
+
+				this.computeTrace();
+
+				this.simulation_time += this.dt * this.iterations;
+			
+				setHTML(this.html_time, "Jours", secondsToDays(this.simulation_time).toFixed(6));
 			}
 
-			this.computeTrace();
-
-			this.simulation_time += this.dt * this.iterations;
-			setHTML(this.html_time, "Jours", secondsToDays(this.simulation_time).toFixed(6));
 
 		this.stats_computing.end();
 		this.stats_rendering.begin();

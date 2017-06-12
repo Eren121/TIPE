@@ -1,10 +1,9 @@
 var libe_speed, solar_system, binary_star;
 var currentAnim = libe_speed;
-var paused = false;
 
 document.addEventListener('keydown', function(e) {
 	if(e.keyCode == 80) { // touche "p"
-		paused = !paused;
+		global.paused = !global.paused;
 	}
 });
 
@@ -73,10 +72,7 @@ document.getElementById('cvs').addEventListener('click', function(e) {
 
 function update() {
 
-	if(!paused) {
-
-		currentAnim.update();
-	}
+	currentAnim.update();
 
 	window.requestAnimationFrame(update);
 }
