@@ -45,5 +45,4 @@ Body.prototype.attract = function(m) {
 
 	m.acc.x += a * vec_distance.x;
 	m.acc.y += a * vec_distance.y;
-
 };
