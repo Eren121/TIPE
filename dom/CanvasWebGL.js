@@ -1,4 +1,4 @@
-var BODIES_LENGTH = 10;
+var BODIES_LENGTH = 50;
 
 function CanvasWebGL(id, vert, frag) {
 	this.cvs = document.getElementById(id);

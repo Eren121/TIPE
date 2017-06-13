@@ -42,6 +42,10 @@ Body.prototype.attract = function(m) {
 	var vec_distance = this.pos.minus(m.pos);
 
 	var d = vec_distance.length();
+
+	if(d == 0)
+		return;
+
 	var a = (G * this.mass) / (d*d*d);
 
 	m.acc.x += a * vec_distance.x;

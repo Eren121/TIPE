@@ -2,8 +2,10 @@ var FRAG_SHADER_SRC =  `
 	precision mediump float;
 	uniform float param;
 
+	#define LENGTH 50
+
 	//xy: pos, z: mass
-	uniform vec3 bodies[10];
+	uniform vec3 bodies[LENGTH];
 
 	float G = 6.674e-11;
 
@@ -33,7 +35,7 @@ var FRAG_SHADER_SRC =  `
 		vec2 field = vec2(0.0);
 		
 		
-		for(int i = 0; i < 10; ++i) {
+		for(int i = 0; i < LENGTH; ++i) {
 			if(bodies[i].z > 0.0) { //Si la masse est supérieure à 0
 				field += getGravitationLocal(pos, bodies[i]);
 			}
