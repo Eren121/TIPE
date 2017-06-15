@@ -24,5 +24,7 @@ class LiberationSpeed extends Animation {
 		this.addBody(rocket);
 		
 		this.dilatation = 1e12;
+
+		this.name = 'Vitesse de libération';
 	}
 }

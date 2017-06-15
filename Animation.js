@@ -45,7 +45,10 @@ class Animation {
 		this.isForeground = false;
 
 		//Texte d'information
-		this.infoText = "";
+		this.infoText = '';
+
+		//Nom affiché dans les boutons radios
+		this.name = '';
 	}
 	
 	//Quand l'animation est choisie pour aller au premier plan

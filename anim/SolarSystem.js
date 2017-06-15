@@ -20,5 +20,7 @@ class SolarSystem extends Animation {
 		}
 	
 		this.dilatation = 1e17;
+
+		this.name = 'Système solaire';
 	}
 }
