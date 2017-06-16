@@ -19,6 +19,8 @@ var SPEED_MOON = 1.022e3;
 */
 
 //Vitesse de la lumière dans le vide en m/s
+
 var SPEED_LIGHT = 3e8;
+var SPEED_LIGHT2 = SPEED_LIGHT * SPEED_LIGHT;
 
 var LIBERATION_SPEED_EARTH = 11.2e3;

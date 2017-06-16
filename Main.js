@@ -15,7 +15,7 @@ var options = [
 	},
 	{
 		obj: null,
-		className: BlackHole
+		className: Orbital 
 	}
 ];
 

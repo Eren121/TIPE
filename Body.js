@@ -1,4 +1,6 @@
 //rendeRadius: taille de l'objet en pixel dans le canvas
+//radius: inutilisé, les corps sont assimilés à des points matériels
+
 function Body(mass, radius, pos, render_radius) {
 	this.mass = mass;
 	this.radius = radius;
@@ -34,7 +36,7 @@ Body.prototype.resetForces = function() {
 Body.prototype.attract = function(m) {
 
 	//On ne traite pas les cas ou la masse est nulle
-	if(m.mass === 0 || this.mass === 0)
+	if(this.mass === 0)
 		return;
 	
 	// vecteur unitaire dirigé de m vers this
