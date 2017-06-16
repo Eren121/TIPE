@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WebGL</title>
+	</head>
+	<body>
+		<canvas id='cvs' width='800' height='800'></canvas>
+	
+		<script src='utils/Vec.js'></script>
+
+		<script>
+			var cvs = document.getElementById('cvs');
+			var ctx = cvs.getContext('2d');
+
+			var pos_north = new Vec(400, 300);
+			var pos_south = new Vec(400, 500);
+
+			var pos_m = pos_north.copy();
+			var q_m;
+			
+			function coulomb(pos1, pos2, q1, q2) {
+				var r = pos1.minus(pos2);
+				var d = r.length();
+
+				var l = 1e4;
+				
+				if(d > 0) {
+					r.x = l*q1*q2 / (d*d*d) * r.x;
+					r.y = l*q1*q2 / (d*d*d) * r.y;
+				 }
+
+				return r;
+			}
+
+
+			ctx.fillStyle = 'grey';
+			ctx.fillRect(0, 0, 800, 800);
+
+
+			ctx.beginPath();
+			ctx.fillStyle = 'red';
+			ctx.arc(pos_north.x, pos_north.y, 25, 0, 2 * Math.PI, false);
+			ctx.fill();
+			ctx.closePath();
+
+			ctx.beginPath();
+			ctx.fillStyle = 'blue';
+			ctx.arc(pos_south.x, pos_south.y, 25, 0, 2 * Math.PI, false);
+			ctx.fill();
+			ctx.closePath();
+
+			function multi_update(center) {
+
+				var c = 500;
+				var nb_pts = 50;
+				var radius = 50;
+				var theta;
+
+				for(var i = 0; i < nb_pts; ++i) {
+
+					pos_m = center.copy();
+					theta = i * (2 * Math.PI / nb_pts);
+					
+					pos_m.x += radius * Math.cos(theta);
+					pos_m.y += radius * Math.sin(theta);
+
+					ctx.beginPath();
+					ctx.fillStyle = 'black';
+					ctx.arc(pos_m.x, pos_m.y, 1, 0, 2 * Math.PI, false);
+					ctx.fill();
+					ctx.closePath();
+
+					for(var j = 0; j < c; ++j)
+						update();
+				}
+
+
+				//window.requestAnimationFrame(multi_update);
+			}
+
+			function update() {
+
+				
+				pos_m = pos_m.plus(coulomb(pos_m, pos_south, q_m, -1));
+				pos_m = pos_m.plus(coulomb(pos_m, pos_north, q_m, 1));
+
+				ctx.beginPath();
+				ctx.fillStyle = 'black';
+				ctx.arc(pos_m.x, pos_m.y, 1, 0, 2 * Math.PI, false);
+				ctx.fill();
+				ctx.closePath();
+				
+			}
+
+			function trace(pos) {
+				
+				pos_m = pos;
+			}
+
+			q_m = 1;
+			multi_update(pos_north);
+
+			q_m = -1;
+			multi_update(pos_south);
+
+			document.getElementById('cvs').onclick = function(e) {
+				var rect = cvs.getBoundingClientRect();
+				var pos = new Vec(e.clientX - rect.left, e.clientY - rect.top);
+
+				trace(pos);
+			};
+
+		</script>
+	</bdoy>
