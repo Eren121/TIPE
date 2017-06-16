@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WebGL</title>
+	</head>
+	<body>
+		<canvas id='cvs' width='800' height='800'></canvas>
+	
+		<script src='utils/Vec.js'></script>
+
+		<script>
+			var cvs = document.getElementById('cvs');
+			var ctx = cvs.getContext('2d');
+
+			//Pour le champ gravitationnel
+
+			var pos_m;
+			var q_m;
+
+			var objs = [
+				{
+					pos: new Vec(400, 300),
+					q: 1,
+					mass: 1e4,
+					color: 'red',
+					radius: 20
+				},
+				{
+					pos: new Vec(400, 500),
+					q: -0.5,
+					mass: 1e4 * 0.5,
+					color: 'blue',
+					radius: 10
+				}
+			];
+			
+			//Convention: 1 attire 2
+
+			function gravitation(pos1, pos2, mass1) {
+				var r = pos1.minus(pos2);
+				var d = r.length();
+				
+				r.x =  mass1 / (d*d*d) * r.x;
+				r.y =  mass1 / (d*d*d) * r.y;
+
+				//On inverse le champ gravitationnel
+
+				return r.multiply(-1);
+
+			}
+
+			function coulomb(pos1, pos2, q1, q2) {
+				var r = pos2.minus(pos1); //vecteur dirigé vers le corps attiré
+				var d = r.length();
+
+				var l = 1e4;
+				
+				if(d > 0) {
+					r.x = l*q1*q2 / (d*d*d) * r.x;
+					r.y = l*q1*q2 / (d*d*d) * r.y;
+				 }
+
+				return r;
+			}
+
+
+			ctx.fillStyle = 'grey';
+			ctx.fillRect(0, 0, 800, 800);
+
+			var c = 1000;
+
+			function multi_update(center) {
+
+				var nb_pts = 50;
+				var radius = 20;
+				var theta;
+
+				for(var i = 0; i < nb_pts; ++i) {
+
+					pos_m = center.copy();
+					theta = i * (2 * Math.PI / nb_pts);
+					
+					pos_m.x += radius * Math.cos(theta);
+					pos_m.y += radius * Math.sin(theta);
+
+					ctx.beginPath();
+					ctx.fillStyle = 'black';
+					ctx.arc(pos_m.x, pos_m.y, 1, 0, 2 * Math.PI, false);
+					ctx.fill();
+					ctx.closePath();
+
+					for(var j = 0; j < c; ++j)
+						update();
+				}
+
+
+				for(var i = 0; i < objs.length; ++i) {
+
+					ctx.beginPath();
+					ctx.fillStyle = objs[i].color;
+					ctx.arc(objs[i].pos.x, objs[i].pos.y, objs[i].radius, 0, 2 * Math.PI, false);
+					ctx.fill();
+					ctx.closePath();
+				}
+			}
+
+			function update() {
+				
+				var option = 2; //1: gravitation, sinon coulomb
+				var a = new Vec(0, 0);
+				
+				if(option == 1) {
+					
+					for(var i = 0; i < objs.length; ++i) {
+						
+						var obj = objs[i];
+
+						a = a.plus(gravitation(obj.pos, pos_m, obj.mass));
+					}
+				}
+				else {
+					
+					for(var i = 0; i < objs.length; ++i) {
+						
+						var obj = objs[i];
+
+						a = a.plus(coulomb(obj.pos, pos_m, q_m, obj.q));
+					}
+				}
+
+				pos_m = pos_m.plus(a);
+			
+				ctx.beginPath();
+				ctx.fillStyle = 'black';
+				ctx.arc(pos_m.x, pos_m.y, 1, 0, 2 * Math.PI, false);
+				ctx.fill();
+				ctx.closePath();
+				
+			}
+
+			function trace(pos) {
+				pos_m = pos;
+				
+				for(var i = 0; i < c; ++i)
+					update();
+			}
+
+			for(var i = 0; i < objs.length; ++i) {
+				
+				q_m = objs[i].q;
+				multi_update(objs[i].pos);
+			}
+
+			document.getElementById('cvs').onclick = function(e) {
+				var rect = cvs.getBoundingClientRect();
+				var pos = new Vec(e.clientX - rect.left, e.clientY - rect.top);
+
+				trace(pos);
+			};
+
+		</script>
+	</bdoy>
