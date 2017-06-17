@@ -21,10 +21,19 @@ CanvasElement.prototype.circle = function(pos, r, clr) {
 	this.ctx.closePath();
 };
 
+CanvasElement.prototype.circle_stroke = function(pos, r, clr) {
+	
+	this.ctx.beginPath();
+	this.ctx.strokeStyle = clr;
+	this.ctx.arc(pos.x, pos.y, r, 0, 2 * Math.PI);
+	this.ctx.stroke();
+	this.ctx.closePath();
+};
+
 CanvasElement.prototype.dot = function(pos, clr) {
 	this.ctx.fillStyle = clr;
 	this.ctx.fillRect(pos.x, pos.y, 2, 2);
-}
+};
 
 CanvasElement.prototype.clear = function() {
 	this.ctx.clearRect(0, 0, this.w, this.h);

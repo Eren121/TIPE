@@ -16,6 +16,10 @@ var options = [
 	{
 		obj: null,
 		className: Orbital 
+	},
+	{
+		obj: null,
+		className: BlackHole
 	}
 ];
 

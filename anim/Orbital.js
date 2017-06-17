@@ -1,10 +1,10 @@
 class Orbital extends Animation {
 	constructor() {
-		super(SUN.radius * 20, daysToSeconds(1e-1) / 60, 1);
+		super(SUN.radius * 20, daysToSeconds(1e-1) / 60, 100);
 		
 		// https://fr.wikipedia.org/wiki/Horizon_des_%C3%A9v%C3%A8nements
 
-		this.blackHole = new Body(
+		this.star = new Body(
 
 			SUN.mass,
 			0,
@@ -13,7 +13,7 @@ class Orbital extends Animation {
 		);
 
 
-		this.addBody(this.blackHole);
+		this.addBody(this.star);
 		this.dilatation = 1e17;
 		this.name ='Vitesse orbitale';
 		this.infoText = 'Cliquer pour ajouter des planètes';
@@ -28,9 +28,10 @@ class Orbital extends Animation {
 			20
 		);
 		
-		var d = body.pos.minus(this.blackHole.pos).length();
-		var v = Math.sqrt(G*this.blackHole.mass/d);
-		body.speed = getNormal(body.pos, this.blackHole.pos).multiply(v);
+		var d = body.pos.minus(this.star.pos).length();
+		var v = Math.sqrt(G*this.star.mass/d);
+
+		body.speed = getNormal(body.pos, this.star.pos).multiply(v);
 
 		this.addBody(body);
 	}

@@ -107,24 +107,60 @@ class Animation {
 
 	}
 
+	/*
+		On calcul la trace si un temps minimal est passé,
+		ou bien si la distance entre deux positions est supérieure à N pixels
+		En vérifiant que le corps est bien visible
+	*/
+
 	computeTrace() {
 		
+
+		var doCompute = false;
+		var d2 = this.world.getWorldLength(15); //Distance entre N pixels
+		d2 *= d2;
+
 		var i;
-
 		//Ajouter la trace
+	
 		if(currentTime() > this.last_time_trace + 0.1) {
+			doCompute = true;
+		}
+		else {
 			
-			this.last_time_trace = currentTime();
+			for(i = 0; i < this.bodies.length; ++i) {
 
-			for(i = 0; i < this.bodies.length; ++i) {
-				this.last_trace_time = currentTime();
-				this.traces[i].push(this.world.getCvsCoord(this.bodies[i].pos));
+				var trace = this.traces[i];
+				var body = this.bodies[i];
+
+				// Si le corps est non visible, inutile de continuer
+				if(body.pos.x < 0 || body.pos.y < 0 || body.pos.x > this.world.w || body.pos.y > this.world.h) {
+					continue;
+				}
+
+				if(trace.length === 0 || this.bodies[i].pos.minus(this.world.getWorldCoord(trace.last())).length2() > d2) {
+					doCompute = true;
+					break;
+				}
 			}
 		}
 
+		if(!doCompute)
+			return;
+	
+			
+		this.last_time_trace = currentTime();
+
+		for(i = 0; i < this.bodies.length; ++i) {
+			this.last_trace_time = currentTime();
+			this.traces[i].push(this.world.getCvsCoord(this.bodies[i].pos));
+		}
 	}
 
 	draw() {
+
+		this.drawShader();
+		this.drawTrace();
 
 		var i;
 		var body;
@@ -218,9 +254,9 @@ class Animation {
 				//On fait plusieurs fois la boucle pour augmenter la vitesse de l'animation
 				for(nb = 0; nb < this.iterations; ++nb) {
 					this.computeForces();
+					this.computeTrace();
 				}
 
-				this.computeTrace();
 
 				this.simulation_time += this.dt * this.iterations;
 			
@@ -231,8 +267,6 @@ class Animation {
 		this.stats_computing.end();
 		this.stats_rendering.begin();
 
-		this.drawShader();
-		this.drawTrace();
 		this.draw();
 
 		this.stats_rendering.end();
