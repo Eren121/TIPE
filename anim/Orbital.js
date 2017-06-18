@@ -1,6 +1,6 @@
 class Orbital extends Animation {
 	constructor() {
-		super(SUN.radius * 20, daysToSeconds(1e-1) / 60, 100);
+		super(SUN.radius * 20, daysToSeconds(1e-1) / 60, 1);
 		
 		// https://fr.wikipedia.org/wiki/Horizon_des_%C3%A9v%C3%A8nements
 

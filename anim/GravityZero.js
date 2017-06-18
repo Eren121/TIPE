@@ -61,7 +61,7 @@ class GravityZero extends Animation {
 
 		this.dilatation = 1e17;
 
-		this.infoText = "Cliquer pour ajouter des étoiles";
+		this.infoText = "Cliquer pour ajouter des planètes";
 		this.name = 'Gravité zéro';
 	}
 

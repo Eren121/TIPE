@@ -13,7 +13,7 @@ class LiberationSpeed extends Animation {
 		this.addBody(this.earth);
 		
 		this.addRocket(0.9);
-		this.addRocket(0.999);
+		this.addRocket(0.99);
 		this.addRocket(1);
 		this.dilatation = 1e12;
 
