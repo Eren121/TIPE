@@ -2,7 +2,7 @@ class SolarSystem extends Animation {
 
 	constructor() {
 
-		super(PLANETS.last().distance * 2, daysToSeconds(10) / 60, 100);
+		super(PLANETS.last().distance * 2, daysToSeconds(10) / 60, 1000);
 
 		var sun_pos = new Vec(this.world.w / 2, this.world.h / 2);	
 		var sun = new Body(SUN.mass, SUN.radius, sun_pos, 20);

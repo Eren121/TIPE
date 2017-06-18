@@ -37,7 +37,7 @@ class BinaryStar extends Animation {
 	click(x, y) {
 
 		var body = new Body(
-			SUN.mass,
+			-SUN.mass,
 			SUN.radius,
 			this.world.getWorldCoord(new Vec(x, y)),
 			20

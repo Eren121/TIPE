@@ -20,6 +20,10 @@ var options = [
 	{
 		obj: null,
 		className: BlackHole
+	},
+	{
+		obj: null,
+		className: GravityZero
 	}
 ];
 

@@ -17,7 +17,7 @@ Body.prototype.update = function(dt) {
 	this.speed.y += this.acc.y * dt;
 
 	//Ne pas dépasser la vitesse de la lumière
-	if(this.speed.length2() > SPEED_LIGHT*SPEED_LIGHT) {
+	if(this.speed.length2() > SPEED_LIGHT2) {
 		this.speed = this.speed.normalize(SPEED_LIGHT);
 	}
 
@@ -34,22 +34,16 @@ Body.prototype.resetForces = function() {
 // Attire un objet par la force gravitationnelle
 
 Body.prototype.attract = function(m) {
-
-	//On ne traite pas les cas ou la masse est nulle
-	if(this.mass === 0)
-		return;
 	
-	// vecteur unitaire dirigé de m vers this
-	
-	var vec_distance = this.pos.minus(m.pos);
+	var vec = this.pos.minus(m.pos);
 
-	var d = vec_distance.length();
+	var d = vec.length();
 
 	if(d == 0)
 		return;
 
 	var a = (G * this.mass) / (d*d*d);
 
-	m.acc.x += a * vec_distance.x;
-	m.acc.y += a * vec_distance.y;
+	m.acc.x += a * vec.x;
+	m.acc.y += a * vec.y;
 };

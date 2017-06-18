@@ -36,7 +36,7 @@ var FRAG_SHADER_SRC =  `
 		
 		
 		for(int i = 0; i < LENGTH; ++i) {
-			if(bodies[i].z > 0.0) { //Si la masse est supérieure à 0
+			if(bodies[i].z != 0.0) { //Si la masse est supérieure à 0
 				field += getGravitationLocal(pos, bodies[i]);
 			}
 		}
